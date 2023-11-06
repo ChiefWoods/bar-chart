@@ -1,0 +1,29 @@
+body {
+  background-color: #708090;
+}
+
+/* Main */
+
+main {
+  display: flex;
+  flex-direction: column;
+  margin: auto auto;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 2px 2px 20px;
+}
+
+#title {
+  font-size: 4rem;
+}
+
+text a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+
+footer {
+  margin-top: 0;
+}
