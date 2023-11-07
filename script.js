@@ -20,6 +20,13 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
     const xAxis = d3.axisBottom(xScale);
     const yAxis = d3.axisLeft(yScale);
 
+    // Title
+    d3.select('main')
+      .append('text')
+      .text('United States GDP')
+      .attr('id', 'title')
+      .style('font-size', '4rem')
+
     // Tooltip
     const tooltip = d3.select('main')
       .append('div')

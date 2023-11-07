@@ -14,10 +14,6 @@ main {
   box-shadow: 2px 2px 20px;
 }
 
-#title {
-  font-size: 4rem;
-}
-
 text a:hover {
   text-decoration: underline;
 }
