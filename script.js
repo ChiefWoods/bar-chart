@@ -1,6 +1,7 @@
 const width = 900;
 const height = 460;
 const padding = 60;
+const xOffset = 20;
 
 fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json')
   .then(response => response.json())
@@ -49,23 +50,36 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
     svg.append('text')
       .text('Gross Domestic Product')
       .attr('x', height * -0.5)
-      .attr('y', padding + 20)
+      .attr('y', padding + xOffset + 20)
       .attr('transform', 'rotate(-90)')
       .style('font-size', '1.5rem')
 
     // More Information
     svg.append('text')
       .html('More Information: <a href="http://www.bea.gov/national/pdf/nipaguid.pdf" target="_blank">http://www.bea.gov/national/pdf/nipaguid.pdf</a>')
-      .attr('x', width / 2 + 80)
+      .attr('x', width / 2 + 75 + xOffset)
       .attr('y', height - 10)
       .style('font-size', '1.2rem')
+      // .style('text-anchor', 'end')
+
+    // x-axis
+    svg.append('g')
+      .attr('id', 'x-axis')
+      .attr('transform', `translate(${xOffset}, ${height - padding})`)
+      .call(xAxis)
+
+    // y-axis
+    svg.append('g')
+      .attr('id', 'y-axis')
+      .attr('transform', `translate(${padding + xOffset}, 0)`)
+      .call(yAxis)
 
     // Bars
     svg.selectAll('rect')
       .data(dataset)
       .enter()
       .append('rect')
-      .attr('x', (d, i) => xScale(yearsDate[i]))
+      .attr('x', (d, i) => xScale(yearsDate[i]) + xOffset)
       .attr('y', d => yScale(d[1]))
       .attr('class', 'bar')
       .attr('data-date', d => d[0])
@@ -74,7 +88,7 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
       .style('height', d => height - padding - yScale(d[1]))
       .style('fill', '#f59e0b')
       .style('stroke', '#fff')
-      .style('stroke-width', 0.2)
+      .style('stroke-width', '0.2px')
       .on('mouseover', (e, d) => {
         const year = d[0].split('-')[0];
         const month = d[0].split('-')[1];
@@ -114,17 +128,5 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
         d3.select(e.target)
           .style('fill', '#f59e0b')
       })
-
-    // x-axis
-    svg.append('g')
-      .attr('id', 'x-axis')
-      .attr('transform', `translate(0, ${height - padding})`)
-      .call(xAxis)
-
-    // y-axis
-    svg.append('g')
-      .attr('id', 'y-axis')
-      .attr('transform', `translate(${padding}, 0)`)
-      .call(yAxis)
   })
   .catch(error => console.error(error))
