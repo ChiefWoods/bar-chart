@@ -15,7 +15,7 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
       .range([padding, width - padding])
 
     const yScale = d3.scaleLinear()
-      .domain([0, d3.max(dataset, d => d[1])])
+      .domain([0, d3.max(dataset, d => d[1]) + 1000])
       .range([height - padding, padding])
 
     const xAxis = d3.axisBottom(xScale);
@@ -32,9 +32,9 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
     const tooltip = d3.select('main')
       .append('div')
       .attr('id', 'tooltip')
-      .style('opacity', 0.9)
       .style('visibility', 'hidden')
       .style('position', 'absolute')
+      .style('opacity', 0.9)
       .style('background-color', '#fde68a')
       .style('padding', '10px')
       .style('box-shadow', '1px 1px 10px')
@@ -44,7 +44,7 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
       .append('svg')
       .style('width', width)
       .style('height', height)
-      .style('background-color', '#fff')
+      .style('background-color', 'white')
 
     // Gross Domestic Product
     svg.append('text')
@@ -57,10 +57,20 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
     // More Information
     svg.append('text')
       .html('More Information: <a href="http://www.bea.gov/national/pdf/nipaguid.pdf" target="_blank">http://www.bea.gov/national/pdf/nipaguid.pdf</a>')
+      .attr('class', 'info')
       .attr('x', width / 2 + 75 + xOffset)
       .attr('y', height - 10)
       .style('font-size', '1.2rem')
-      // .style('text-anchor', 'end')
+
+    d3.select('.info a')
+      .on('mouseover', () => {
+        d3.select('.info a')
+          .style('text-decoration', 'underline')
+      })
+      .on('mouseout', () => {
+        d3.select('.info a')
+          .style('text-decoration', 'none')
+      })
 
     // x-axis
     svg.append('g')
@@ -75,19 +85,19 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
       .call(yAxis)
 
     // Bars
-    svg.selectAll('rect')
+    svg.selectAll('.bar')
       .data(dataset)
       .enter()
       .append('rect')
-      .attr('x', (d, i) => xScale(yearsDate[i]) + xOffset)
-      .attr('y', d => yScale(d[1]))
       .attr('class', 'bar')
       .attr('data-date', d => d[0])
       .attr('data-gdp', d => d[1])
+      .attr('x', (d, i) => xScale(yearsDate[i]) + xOffset)
+      .attr('y', d => yScale(d[1]))
       .style('width', barWidth)
       .style('height', d => height - padding - yScale(d[1]))
       .style('fill', '#f59e0b')
-      .style('stroke', '#fff')
+      .style('stroke', 'white')
       .style('stroke-width', '0.2px')
       .on('mouseover', (e, d) => {
         const year = d[0].split('-')[0];
