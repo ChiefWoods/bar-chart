@@ -1,12 +1,15 @@
-const width = 900;
-const height = 460;
-const padding = 60;
-const xOffset = 20;
-
-fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json')
-  .then(response => response.json())
+d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json')
   .then(data => {
     const dataset = data.data;
+
+    const width = 900;
+    const height = 460;
+    const padding = 60;
+    const xOffset = 20;
+    const amber200 = '#fde68a';
+    const amber500 = '#f59e0b';
+    const amber700 = '#b45309';
+
     const barWidth = width / dataset.length;
     const yearsDate = dataset.map(item => new Date(item[0]))
 
@@ -35,7 +38,7 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
       .style('visibility', 'hidden')
       .style('position', 'absolute')
       .style('opacity', 0.9)
-      .style('background-color', '#fde68a')
+      .style('background-color', amber200)
       .style('padding', '10px')
       .style('box-shadow', '1px 1px 10px')
 
@@ -96,7 +99,7 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
       .attr('y', d => yScale(d[1]))
       .style('width', barWidth)
       .style('height', d => height - padding - yScale(d[1]))
-      .style('fill', '#f59e0b')
+      .style('fill', amber500)
       .style('stroke', 'white')
       .style('stroke-width', '0.2px')
       .on('mouseover', (e, d) => {
@@ -123,7 +126,7 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
           .style('width', '150px')
 
         d3.select(e.target)
-          .style('fill', '#b45309')
+          .style('fill', amber700)
       })
       .on('mousemove', e => {
         tooltip.style('left', `${e.pageX + 20}px`)
@@ -136,7 +139,6 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
           .style('visibility', 'hidden')
 
         d3.select(e.target)
-          .style('fill', '#f59e0b')
+          .style('fill', amber500)
       })
-  })
-  .catch(error => console.error(error))
+  }).catch(error => console.error(error))
