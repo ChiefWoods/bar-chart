@@ -4,7 +4,7 @@ d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
 
     const width = 900;
     const height = 460;
-    const padding = 60;
+    const padding = 45;
     const xOffset = 20;
     const amber200 = '#fde68a';
     const amber500 = '#f59e0b';
@@ -26,21 +26,11 @@ d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
 
     // Title
     d3.select('main')
-      .append('text')
+      .append('h1')
       .text('United States GDP')
       .attr('id', 'title')
       .style('font-size', '4rem')
-
-    // Tooltip
-    const tooltip = d3.select('main')
-      .append('div')
-      .attr('id', 'tooltip')
-      .style('visibility', 'hidden')
-      .style('position', 'absolute')
-      .style('opacity', 0.9)
-      .style('background-color', amber200)
-      .style('padding', '10px')
-      .style('box-shadow', '1px 1px 10px')
+      .style('font-weight', 400)
 
     // Main SVG
     const svg = d3.select('main')
@@ -58,14 +48,17 @@ d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
       .style('font-size', '1.5rem')
 
     // More Information
-    svg.append('text')
+    d3.select('main')
+      .append('span')
       .html('More Information: <a href="http://www.bea.gov/national/pdf/nipaguid.pdf" target="_blank">http://www.bea.gov/national/pdf/nipaguid.pdf</a>')
       .attr('class', 'info')
-      .attr('x', width / 2 + 75 + xOffset)
-      .attr('y', height - 10)
-      .style('font-size', '1.2rem')
+      .style('font-size', '1.28rem')
+      .style('margin-left', 'auto')
+      .style('margin-right', `${padding - xOffset}px`)
 
     d3.select('.info a')
+      .style('text-decoration', 'none')
+      .style('color', 'black')
       .on('mouseover', () => {
         d3.select('.info a')
           .style('text-decoration', 'underline')
@@ -87,7 +80,18 @@ d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
       .attr('transform', `translate(${padding + xOffset}, 0)`)
       .call(yAxis)
 
-    // Bars
+    // Tooltip
+    const tooltip = d3.select('main')
+      .append('div')
+      .attr('id', 'tooltip')
+      .style('visibility', 'hidden')
+      .style('position', 'absolute')
+      .style('opacity', 0.9)
+      .style('background-color', amber200)
+      .style('padding', '10px')
+      .style('box-shadow', '1px 1px 10px')
+
+    // Bar
     svg.selectAll('.bar')
       .data(dataset)
       .enter()
