@@ -6,9 +6,7 @@ d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
     const height = 460;
     const padding = 45;
     const xOffset = 20;
-    const amber200 = '#fde68a';
-    const amber500 = '#f59e0b';
-    const amber700 = '#b45309';
+    const colorScheme = d3.schemeBlues[9];
 
     const barWidth = width / dataset.length;
     const yearsDate = dataset.map(item => new Date(item[0]))
@@ -87,7 +85,7 @@ d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
       .style('visibility', 'hidden')
       .style('position', 'absolute')
       .style('opacity', 0.9)
-      .style('background-color', amber200)
+      .style('background-color', colorScheme[2])
       .style('padding', '10px')
       .style('box-shadow', '1px 1px 10px')
 
@@ -103,7 +101,7 @@ d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
       .attr('y', d => yScale(d[1]))
       .style('width', barWidth)
       .style('height', d => height - padding - yScale(d[1]))
-      .style('fill', amber500)
+      .style('fill', colorScheme[5])
       .style('stroke', 'white')
       .style('stroke-width', '0.2px')
       .on('mouseover', (e, d) => {
@@ -130,7 +128,7 @@ d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
           .style('width', '150px')
 
         d3.select(e.target)
-          .style('fill', amber700)
+          .style('fill', colorScheme[8])
       })
       .on('mousemove', e => {
         tooltip.style('left', `${e.pageX + 20}px`)
@@ -143,6 +141,6 @@ d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
           .style('visibility', 'hidden')
 
         d3.select(e.target)
-          .style('fill', amber500)
+          .style('fill', colorScheme[5])
       })
   }).catch(error => console.error(error))
